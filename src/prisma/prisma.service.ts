@@ -13,4 +13,17 @@ export class PrismaService extends PrismaClient {
       },
     });
   }
+
+  cleanDb() {
+    /**
+     * Deleting order matters. You may also want to migrate database after changing
+        "  user   User @relation(fields: [userId], references: [id])" 
+        to 
+        "  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)"
+     */
+    return this.$transaction([
+      this.user.deleteMany(),
+      this.bookmark.deleteMany(),
+    ]);
+  }
 }
