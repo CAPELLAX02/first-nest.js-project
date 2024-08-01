@@ -4,6 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from '../src/prisma/prisma.service';
 import * as pactum from 'pactum';
 import { AuthDto } from 'src/auth/dto';
+import { EditUserDto } from 'src/user/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -105,10 +106,38 @@ describe('App e2e', () => {
           .expectStatus(200);
       });
     });
-    describe('Edit user', () => {});
+    // describe('Edit user', () => {
+    //   it('should edit user', () => {
+    //     const dto: EditUserDto = {
+    //       firstName: 'Ahmet',
+    //       email: 'ahmet2@gmail.com',
+    //     };
+    //     return pactum
+    //       .spec()
+    //       .patch('/users')
+    //       .withHeaders({
+    //         Authorization: 'Bearer $S{userAt}',
+    //       })
+    //       .withBody(dto)
+    //       .expectStatus(200)
+    //       .expectBodyContains(dto.firstName)
+    //       .expectBodyContains(dto.email);
+    //   });
+    // });
   });
 
   describe('Bookmarks', () => {
+    describe('Get empty bookmarks', () => {
+      it('should get bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200);
+      });
+    });
     describe('Create bookmark', () => {});
     describe('Get bookmark', () => {});
     describe('Get bookmark by ID', () => {});
